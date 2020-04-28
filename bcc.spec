@@ -11,17 +11,9 @@ Source0:        %{url}/releases/download/v%{version}/%{name}-src-with-submodule.
 # Arches will be included as upstream support is added and dependencies are
 # satisfied in the respective arches
 
-BuildRequires:  bison
-BuildRequires:  cmake >= 2.8.7
-BuildRequires:  flex
-BuildRequires:  libxml2-devel
-BuildRequires:  python3-devel
-BuildRequires:  elfutils-libelf-devel
-BuildRequires:  llvm-devel
-BuildRequires:  clang-devel
-BuildRequires:  llvm-static
-BuildRequires:  ncurses-devel
-BuildRequires:  pkgconfig(luajit)
+BuildRequires:  bison cmake >= 2.8.7 flex libxml2-devel python3-devel
+BuildRequires:  elfutils-libelf-devel llvm-devel clang-devel
+BuildRequires:  llvm-static ncurses-devel pkgconfig(luajit)
 BuildRequires:  libbpf-devel >= 0.0.5-3, libbpf-static >= 0.0.5-3
 
 Requires:       %{name}-tools = %{version}-%{release}
@@ -93,6 +85,7 @@ Command line tools for BPF Compiler Collection (BCC)
         -DREVISION_LAST=%{version} -DREVISION=%{version} -DPYTHON_CMD=python3 \
         -DCMAKE_USE_LIBBPF_PACKAGE:BOOL=TRUE \
         %{?with_llvm_shared:-DENABLE_LLVM_SHARED=1}
+
 %make_build
 
 
