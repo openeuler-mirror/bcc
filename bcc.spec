@@ -5,8 +5,7 @@ Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
 # Upstream now provides a release with the git submodule embedded in it
-Source0:        %{url}/releases/download/v%{version}/%{name}-src-with-submodule.tar.gz
-#Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 
 # Arches will be included as upstream support is added and dependencies are
 # satisfied in the respective arches
