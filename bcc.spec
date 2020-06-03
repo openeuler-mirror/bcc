@@ -1,6 +1,6 @@
 Name:           bcc
-Version:        0.13.0
-Release:        1
+Version:        0.14.0
+Release:	0
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -152,5 +152,8 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Wed Jun 03 2020 SimpleUpdate Robot <tc@openeuler.org>
+- Update to version 0.14.0
+
 * Sun Apr 26 2020 openEuler Buildteam <buildteam@openeuler.org> - 0.13.0-1
 - Package init
