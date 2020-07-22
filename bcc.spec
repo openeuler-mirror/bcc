@@ -97,6 +97,9 @@ Command line tools for BPF Compiler Collection (BCC)
 find %{buildroot}%{_datadir}/%{name}/{tools,examples} -type f -exec \
   sed -i -e '1s=^#!/usr/bin/python\([0-9.]\+\)\?$=#!%{__python3}=' \
          -e '1s=^#!/usr/bin/env python\([0-9.]\+\)\?$=#!%{__python3}=' \
+         -e 's/from bcc/from bpfcc/g' \
+         -e 's/import bcc/import bpfcc/g' \
+         -e 's/bcc\./bpfcc\./g' \
          -e '1s=^#!/usr/bin/env bcc-lua$=#!/usr/bin/bcc-lua=' {} \;
 
 # Move man pages to the right location
