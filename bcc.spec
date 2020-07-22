@@ -1,6 +1,6 @@
 Name:           bcc
 Version:        0.13.0
-Release:        1
+Release:        2
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -14,6 +14,8 @@ BuildRequires:  bison cmake >= 2.8.7 flex libxml2-devel python3-devel
 BuildRequires:  elfutils-libelf-devel llvm-devel clang-devel
 BuildRequires:  llvm-static ncurses-devel pkgconfig(luajit)
 BuildRequires:  libbpf-devel >= 0.0.5-3, libbpf-static >= 0.0.5-3
+# Additional dependency on util-linux for 'rename'
+BuildRequires:  util-linux
 
 Requires:       %{name}-tools = %{version}-%{release}
 Requires:       libbpf >= 0.0.5-3
@@ -48,13 +50,13 @@ BuildArch:      noarch
 Examples for BPF Compiler Collection (BCC)
 
 
-%package -n python3-%{name}
+%package -n python3-bpfcc
 Summary:        Python3 bindings for BPF Compiler Collection (BCC)
 Requires:       %{name} = %{version}-%{release}
 BuildArch:      noarch
-%{?python_provide:%python_provide python3-%{srcname}}
+%{?python_provide:%python_provide python3-bpfcc}
 
-%description -n python3-%{name}
+%description -n python3-bpfcc
 Python3 bindings for BPF Compiler Collection (BCC)
 
 
@@ -67,7 +69,7 @@ Standalone tool to run BCC tracers written in Lua
 
 %package tools
 Summary:        Command line tools for BPF Compiler Collection (BCC)
-Requires:       python3-%{name} = %{version}-%{release}
+Requires:       python3-bpfcc = %{version}-%{release}
 Requires:       python3-netaddr
 Requires:       kernel-devel
 
@@ -100,6 +102,10 @@ find %{buildroot}%{_datadir}/%{name}/{tools,examples} -type f -exec \
 # Move man pages to the right location
 mkdir -p %{buildroot}%{_mandir}
 mv %{buildroot}%{_datadir}/%{name}/man/* %{buildroot}%{_mandir}/
+
+mv %{buildroot}%{python3_sitelib}/%{name} %{buildroot}%{python3_sitelib}/bpfcc
+rename %{name} bpfcc %{buildroot}%{python3_sitelib}/%{name}-*egg-info
+
 # Avoid conflict with other manpages
 # https://bugzilla.redhat.com/show_bug.cgi?id=1517408
 for i in `find %{buildroot}%{_mandir} -name "*.gz"`; do
@@ -134,8 +140,8 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 %{_libdir}/pkgconfig/lib%{name}.pc
 %{_includedir}/%{name}/
 
-%files -n python3-%{name}
-%{python3_sitelib}/%{name}*
+%files -n python3-bpfcc
+%{python3_sitelib}/bpfcc*
 
 %files help
 %dir %{_docdir}/%{name}
@@ -152,5 +158,8 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Fri Jul 17 2020 Shinwell Hu <micromotive@qq.com> - 0.13.0-2
+- Rename python3-bcc to python3-bpfcc to avoid confliction with bcc on pypi
+
 * Sun Apr 26 2020 openEuler Buildteam <buildteam@openeuler.org> - 0.13.0-1
 - Package init
