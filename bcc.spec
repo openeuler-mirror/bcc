@@ -1,11 +1,11 @@
 Name:           bcc
-Version:        0.13.0
-Release:        2
+Version:        0.15.0
+Release:        0
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
 # Upstream now provides a release with the git submodule embedded in it
-Source0:        %{url}/archive/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/%{name}-src-with-submodule.tar.gz
 
 # Arches will be included as upstream support is added and dependencies are
 # satisfied in the respective arches
@@ -97,6 +97,9 @@ Command line tools for BPF Compiler Collection (BCC)
 find %{buildroot}%{_datadir}/%{name}/{tools,examples} -type f -exec \
   sed -i -e '1s=^#!/usr/bin/python\([0-9.]\+\)\?$=#!%{__python3}=' \
          -e '1s=^#!/usr/bin/env python\([0-9.]\+\)\?$=#!%{__python3}=' \
+         -e 's/from bcc/from bpfcc/g' \
+         -e 's/import bcc/import bpfcc/g' \
+         -e 's/bcc\./bpfcc\./g' \
          -e '1s=^#!/usr/bin/env bcc-lua$=#!/usr/bin/bcc-lua=' {} \;
 
 # Move man pages to the right location
@@ -158,6 +161,10 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Wed Jul 22 2020 Shinwell Hu <micromotive@qq.com> - - 0.15.0-0
+- Upgrade to v0.15.0
+- Using bcc-src-with-submodule instead of bcc-v0.15.0
+
 * Fri Jul 17 2020 Shinwell Hu <micromotive@qq.com> - 0.13.0-2
 - Rename python3-bcc to python3-bpfcc to avoid confliction with bcc on pypi
 
