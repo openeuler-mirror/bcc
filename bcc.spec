@@ -1,11 +1,11 @@
 Name:           bcc
 Version:        0.15.0
-Release:        0
+Release:        1
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
 # Upstream now provides a release with the git submodule embedded in it
-Source0:        %{url}/archive/%{name}-src-with-submodule.tar.gz
+Source0:        %{url}/releases/download/v%{version}/%{name}-src-with-submodule.tar.gz
 
 # Arches will be included as upstream support is added and dependencies are
 # satisfied in the respective arches
@@ -161,6 +161,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Mon Oct 22 2020 liqingqing_1229 <liqingqing3@huawei.com> - - 0.15.0-1
+- update source0's url
+
 * Wed Jul 22 2020 Shinwell Hu <micromotive@qq.com> - - 0.15.0-0
 - Upgrade to v0.15.0
 - Using bcc-src-with-submodule instead of bcc-v0.15.0
