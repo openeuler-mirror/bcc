@@ -1,6 +1,6 @@
 Name:           bcc
 Version:        0.15.0
-Release:        1
+Release:        2
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -161,10 +161,13 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
-* Mon Oct 22 2020 liqingqing_1229 <liqingqing3@huawei.com> - - 0.15.0-1
+* Wed Mar 10 2021 wuchangye <wuchangye@huawei.com> - 0.15.0-2
+- rebuild
+
+* Mon Oct 22 2020 liqingqing_1229 <liqingqing3@huawei.com> - 0.15.0-1
 - update source0's url
 
-* Wed Jul 22 2020 Shinwell Hu <micromotive@qq.com> - - 0.15.0-0
+* Wed Jul 22 2020 Shinwell Hu <micromotive@qq.com> - 0.15.0-0
 - Upgrade to v0.15.0
 - Using bcc-src-with-submodule instead of bcc-v0.15.0
 
