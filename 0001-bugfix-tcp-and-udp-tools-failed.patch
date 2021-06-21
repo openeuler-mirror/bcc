@@ -1,0 +1,129 @@
+From 653b24ca8cc997c7248b2890f869de15eb0f2c7c Mon Sep 17 00:00:00 2001
+From: l00478106 <luzhihao@huawei.com>
+Date: Mon, 21 Jun 2021 19:25:01 +0800
+Subject: [PATCH] bugfix: tcp and udp tools failed
+When older bcc and newer kernel. bcc internal bpf.h does not define BPF_SK_LOOKUP 
+but newer kernel header file uses BPF_SK_LOOKUP. 
+---
+ tools/bindsnoop.py  | 1 +
+ tools/tcpaccept.py  | 1 +
+ tools/tcpconnlat.py | 1 +
+ tools/tcpdrop.py    | 1 +
+ tools/tcplife.py    | 1 +
+ tools/tcpretrans.py | 1 +
+ tools/tcpstates.py  | 1 +
+ tools/tcptop.py     | 1 +
+ tools/tcptracer.py  | 1 +
+ 9 files changed, 9 insertions(+)
+
+diff --git a/tools/bindsnoop.py b/tools/bindsnoop.py
+index e08ebf8..fce5366 100755
+--- a/tools/bindsnoop.py
++++ b/tools/bindsnoop.py
+@@ -97,6 +97,7 @@ args = parser.parse_args()
+ # define BPF program
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #pragma clang diagnostic push
+ #pragma clang diagnostic ignored "-Wtautological-compare"
+ #include <net/sock.h>
+diff --git a/tools/tcpaccept.py b/tools/tcpaccept.py
+index 1a5f1c7..2eccb25 100755
+--- a/tools/tcpaccept.py
++++ b/tools/tcpaccept.py
+@@ -57,6 +57,7 @@ debug = 0
+ # define BPF program
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #include <net/sock.h>
+ #include <bcc/proto.h>
+ 
+diff --git a/tools/tcpconnlat.py b/tools/tcpconnlat.py
+index e28a43a..2f3bf16 100755
+--- a/tools/tcpconnlat.py
++++ b/tools/tcpconnlat.py
+@@ -67,6 +67,7 @@ debug = 0
+ # define BPF program
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #include <net/sock.h>
+ #include <net/tcp_states.h>
+ #include <bcc/proto.h>
+diff --git a/tools/tcpdrop.py b/tools/tcpdrop.py
+index aceff87..e5e3390 100755
+--- a/tools/tcpdrop.py
++++ b/tools/tcpdrop.py
+@@ -42,6 +42,7 @@ debug = 0
+ # define BPF program
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #include <uapi/linux/tcp.h>
+ #include <uapi/linux/ip.h>
+ #include <net/sock.h>
+diff --git a/tools/tcplife.py b/tools/tcplife.py
+index 9fe9804..e576017 100755
+--- a/tools/tcplife.py
++++ b/tools/tcplife.py
+@@ -66,6 +66,7 @@ debug = 0
+ # define BPF program
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #include <linux/tcp.h>
+ #include <net/sock.h>
+ #include <bcc/proto.h>
+diff --git a/tools/tcpretrans.py b/tools/tcpretrans.py
+index 7785d9b..44a1883 100755
+--- a/tools/tcpretrans.py
++++ b/tools/tcpretrans.py
+@@ -44,6 +44,7 @@ debug = 0
+ # define BPF program
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #include <net/sock.h>
+ #include <bcc/proto.h>
+ 
+diff --git a/tools/tcpstates.py b/tools/tcpstates.py
+index 57fbb76..cd2bb29 100755
+--- a/tools/tcpstates.py
++++ b/tools/tcpstates.py
+@@ -61,6 +61,7 @@ debug = 0
+ # define BPF program
+ bpf_header = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #include <linux/tcp.h>
+ #include <net/sock.h>
+ #include <bcc/proto.h>
+diff --git a/tools/tcptop.py b/tools/tcptop.py
+index e9d0d1a..13c7e16 100755
+--- a/tools/tcptop.py
++++ b/tools/tcptop.py
+@@ -78,6 +78,7 @@ loadavg = "/proc/loadavg"
+ # define BPF program
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #include <net/sock.h>
+ #include <bcc/proto.h>
+ 
+diff --git a/tools/tcptracer.py b/tools/tcptracer.py
+index 2e486b1..636ffcb 100755
+--- a/tools/tcptracer.py
++++ b/tools/tcptracer.py
+@@ -42,6 +42,7 @@ args = parser.parse_args()
+ 
+ bpf_text = """
+ #include <uapi/linux/ptrace.h>
++#define BPF_SK_LOOKUP 36
+ #pragma clang diagnostic push
+ #pragma clang diagnostic ignored "-Wtautological-compare"
+ #include <net/sock.h>
+-- 
+2.27.0
+

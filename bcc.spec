@@ -1,6 +1,6 @@
 Name:           bcc
 Version:        0.15.0
-Release:        2
+Release:        3
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -19,6 +19,8 @@ BuildRequires:  util-linux
 
 Requires:       %{name}-tools = %{version}-%{release}
 Requires:       libbpf >= 0.0.5-3
+
+Patch: 0001-bugfix-tcp-and-udp-tools-failed.patch
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -161,6 +163,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Mon Jun 21 2021 luzhihao <luzhihao@huawei.com> - 0.15.0-3
+- bugfix: tcp* BPF_SK_LOOKUP undeclared failed
+
 * Wed Mar 10 2021 wuchangye <wuchangye@huawei.com> - 0.15.0-2
 - rebuild
 
