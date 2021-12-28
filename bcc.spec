@@ -1,6 +1,6 @@
 Name:           bcc
-Version:        0.15.0
-Release:        3
+Version:        0.23.0
+Release:        0
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -19,8 +19,6 @@ BuildRequires:  util-linux
 
 Requires:       %{name}-tools = %{version}-%{release}
 Requires:       libbpf >= 0.0.5-3
-
-Patch: 0001-bugfix-tcp-and-udp-tools-failed.patch
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -86,7 +84,7 @@ Command line tools for BPF Compiler Collection (BCC)
 %cmake . \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo \
         -DREVISION_LAST=%{version} -DREVISION=%{version} -DPYTHON_CMD=python3 \
-        -DCMAKE_USE_LIBBPF_PACKAGE:BOOL=TRUE \
+        -DCMAKE_USE_LIBBPF_PACKAGE:BOOL=FALSE \
         %{?with_llvm_shared:-DENABLE_LLVM_SHARED=1}
 
 %make_build
@@ -134,14 +132,12 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 %license LICENSE.txt
 %{_libdir}/lib%{name}.so.*
 %{_libdir}/libbcc_bpf.so.*
-%{_libdir}/libbcc-no-libbpf.so.*
 
 %files devel
 %exclude %{_libdir}/lib%{name}*.a
 %exclude %{_libdir}/lib%{name}*.la
 %{_libdir}/lib%{name}.so
 %{_libdir}/libbcc_bpf.so
-%{_libdir}/libbcc-no-libbpf.so
 %{_libdir}/pkgconfig/lib%{name}.pc
 %{_includedir}/%{name}/
 
@@ -163,6 +159,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Tue Dec 28 2021 sunsuwan <sunsuwan2@huawei.com> - 0.23.0-0
+- update bcc from 0.15.0 to 0.23.0
+
 * Mon Jun 21 2021 luzhihao <luzhihao@huawei.com> - 0.15.0-3
 - bugfix: tcp* BPF_SK_LOOKUP undeclared failed
 
