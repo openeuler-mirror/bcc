@@ -1,18 +1,27 @@
 Name:           bcc
 Version:        0.23.0
-Release:        0
+Release:        1
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
 # Upstream now provides a release with the git submodule embedded in it
 Source0:        %{url}/releases/download/v%{version}/%{name}-src-with-submodule.tar.gz
 
+%ifarch riscv64
+%{!?with_lua: %global with_lua 0}
+%else
+%{!?with_lua: %global with_lua 1}
+%endif
+
 # Arches will be included as upstream support is added and dependencies are
 # satisfied in the respective arches
 
 BuildRequires:  bison cmake >= 2.8.7 flex libxml2-devel python3-devel
 BuildRequires:  elfutils-libelf-devel llvm-devel clang-devel
-BuildRequires:  llvm-static ncurses-devel pkgconfig(luajit)
+BuildRequires:  llvm-static ncurses-devel
+%if %{with_lua}
+BuildRequires:  pkgconfig(luajit)
+%endif
 BuildRequires:  libbpf-devel >= 0.0.5-3, libbpf-static >= 0.0.5-3
 # Additional dependency on util-linux for 'rename'
 BuildRequires:  util-linux
@@ -61,13 +70,14 @@ BuildArch:      noarch
 %description -n python3-bpfcc
 Python3 bindings for BPF Compiler Collection (BCC)
 
-
+%if %{with_lua}
 %package lua
 Summary:        Standalone tool to run BCC tracers written in Lua
 Requires:       %{name} = %{version}-%{release}
 
 %description lua
 Standalone tool to run BCC tracers written in Lua
+%endif
 
 %package tools
 Summary:        Command line tools for BPF Compiler Collection (BCC)
@@ -156,11 +166,15 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 %{_datadir}/%{name}/tools/
 %{_datadir}/%{name}/introspection/
 
+%if %{with_lua}
 %files lua
 %{_bindir}/bcc-lua
-
+%endif
 
 %changelog
+Thu Feb 22 2022 lvxiaoqian <xiaoqian@nj.iscas.ac.cn> - 0.23.0-1
+- lua jit not available on riscv
+
 * Mon Dec 27 2021 sunsuwan <sunsuwan2@huawei.com> - 0.23.0-0
 - update bcc from 0.15.0 to 0.23.0
 
