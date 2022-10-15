@@ -1,0 +1,26 @@
+From 35452990a25ddc3a4dce51c89d1c3ea7cee9e663 Mon Sep 17 00:00:00 2001
+From: sunsuwan <sunsuwan2@huawei.com>
+Date: Fri, 4 Mar 2022 09:44:20 +0800
+Subject: [PATCH] dynamic link bcc against llvm
+
+Signed-off-by: sunsuwan sunsuwan2@huawei.com
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index e33856c..fb3352e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -57,7 +57,7 @@ include(cmake/FindCompilerFlag.cmake)
+ 
+ option(ENABLE_LLVM_NATIVECODEGEN "Enable use of llvm nativecodegen module (needed by rw-engine)" ON)
+ option(ENABLE_RTTI "Enable compiling with real time type information" OFF)
+-option(ENABLE_LLVM_SHARED "Enable linking LLVM as a shared library" OFF)
++option(ENABLE_LLVM_SHARED "Enable linking LLVM as a shared library" ON)
+ option(ENABLE_CLANG_JIT "Enable Loading BPF through Clang Frontend" ON)
+ option(ENABLE_USDT "Enable User-level Statically Defined Tracing" ON)
+ option(ENABLE_EXAMPLES "Build examples" ON)
+-- 
+2.27.0
+
