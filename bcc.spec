@@ -1,6 +1,6 @@
 Name:           bcc
 Version:        0.23.0
-Release:        1
+Release:        2
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -21,7 +21,6 @@ Requires:       %{name}-tools = %{version}-%{release}
 Requires:       libbpf >= 0.0.5-3
 
 Patch0001: dynamic-link-bcc-against-llvm.patch
-Patch9000: add-tool-cpuload.patch
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -162,6 +161,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Tue Oct 25 2022 liuchao <liuchao173@huawei.com> - 0.23.0-2
+- remove cpuload
+
 * Sat Jul 30 2022 yaoxin <yaoxin30@h-partners.com> - 0.23.0-1
 - bugfix: dynamic link bcc against llvm
 
