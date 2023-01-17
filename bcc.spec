@@ -1,6 +1,8 @@
+%bcond_without llvm_shared
+
 Name:           bcc
 Version:        0.23.0
-Release:        3
+Release:        4
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -19,8 +21,6 @@ BuildRequires:  util-linux
 
 Requires:       %{name}-tools = %{version}-%{release}
 Requires:       libbpf >= 0.0.5-3
-
-Patch6000: dynamic-link-bcc-against-llvm.patch
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -161,6 +161,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Thu Dec 15 2022 Qiang Wei <qiang.wei@suse.com> - 0.23.0-4
+- Use conditonal build to enable with_llvm_shared option
+
 * Tue Oct 25 2022 liuchao <liuchao173@huawei.com> - 0.23.0-3
 - remove cpuload
 
