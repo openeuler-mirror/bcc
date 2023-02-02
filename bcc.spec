@@ -1,6 +1,8 @@
+%bcond_without llvm_shared
+
 Name:           bcc
-Version:        0.23.0
-Release:        2
+Version:        0.26.0
+Release:        1
 Summary:        BPF Compiler Collection (BCC)
 License:        ASL 2.0
 URL:            https://github.com/iovisor/bcc
@@ -13,14 +15,12 @@ Source0:        %{url}/releases/download/v%{version}/%{name}-src-with-submodule.
 BuildRequires:  bison cmake >= 2.8.7 flex libxml2-devel python3-devel
 BuildRequires:  elfutils-libelf-devel llvm-devel clang-devel
 BuildRequires:  llvm-static ncurses-devel pkgconfig(luajit)
-BuildRequires:  libbpf-devel >= 0.0.5-3, libbpf-static >= 0.0.5-3
+BuildRequires:  libbpf-devel >= 0.8.0-1, libbpf-static >= 0.8.0-1
 # Additional dependency on util-linux for 'rename'
 BuildRequires:  util-linux
 
 Requires:       %{name}-tools = %{version}-%{release}
-Requires:       libbpf >= 0.0.5-3
-
-Patch0001: dynamic-link-bcc-against-llvm.patch
+Requires:       libbpf >= 0.8.0-1
 
 %description
 BCC is a toolkit for creating efficient kernel tracing and manipulation
@@ -161,6 +161,12 @@ rm -rf %{buildroot}%{_datadir}/%{name}/tools/old/
 
 
 %changelog
+* Thu Feb 2 2023 JofDiamonds <kwb0523@163..com> - 0.26.0-1
+- upgrade bcc from 0.23.0 to 0.26.0
+
+* Thu Dec 15 2022 Qiang Wei <qiang.wei@suse.com> - 0.23.0-3
+- Use conditonal build to enable with_llvm_shared option
+
 * Tue Oct 25 2022 liuchao <liuchao173@huawei.com> - 0.23.0-2
 - remove cpuload
 
